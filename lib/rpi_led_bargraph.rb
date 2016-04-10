@@ -42,27 +42,26 @@ class RPiLedBarGraph
 
   # input % from 0-100
   #
-  def level(n, blink: false)
-
+  def level(n, blink: false)    
+    
     @blink = blink
 
     upper = (@pins.length / (100.0 / n) - 1).round
     upper = @pins.length - upper - 1 if @invert
+    upper = 0 if upper < 1
     
-    a = @dir == :ltr ? @pins : @pins.reverse
-    
+    a = @dir == :ltr ? @pins : @pins.reverse    
     
     a.each(&:off)
-    a[0..(upper - 1).to_i].each {|x| x.on; x.brightness = @brightness}
+    
+    return if n == 0
+    
+    a[0..(upper).to_i].each {|x| x.on; x.brightness = @brightness}
    
     if @blink then
       sleep 0.3
       a[upper].brightness = @brightness
       a[upper].blink
-    else
-      a[upper].off
-      sleep 0.3
-      a[upper].brightness = @brightness
     end
     
     @level = n
@@ -80,3 +79,4 @@ if __FILE__ == $0 then
   g = RPiLedBarGraph.new(%w(26 19 13 6 5 11 20 16 4 12), wait: 0.1)
   g.on; sleep 0.2; g.off
 
+end  

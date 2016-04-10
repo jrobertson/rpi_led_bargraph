@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = 'rpi_led_bargraph'
-  s.version = '0.2.0'
+  s.version = '0.2.1'
   s.summary = 'Controls an LED bar graph using a Raspberry Pi'
   s.authors = ['James Robertson']
   s.files = Dir['lib/rpi_led_bargraph.rb']
